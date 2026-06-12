@@ -13,24 +13,42 @@ struct CounterFeature {
     @ObservableState
     struct State {
         var count = 0
+        var fact: String?
+        var isLoading = false
     }
-
+    
     enum Action {
         case decrementButtonTapped
         case incrementButtonTapped
+        case factButtonTapped
     }
-
+    
     var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .decrementButtonTapped:
                 state.count -= 1
+                state.fact = nil
                 return .none  // state の講師だけの場合は .none
-
+                
             case .incrementButtonTapped:
                 state.count += 1
+                state.fact = nil
                 return .none
-
+                
+            case .factButtonTapped:
+                state.fact = nil
+                state.isLoading = true
+                
+                let (data, _) = try await URLSession.shared
+                  .data(from: URL(string: "http://number-trivia.com/\(state.count)")!)
+                // 🛑 'async' call in a function that does not support concurrency
+                // 🛑 Errors thrown from here are not handled
+                
+                state.fact = String(decoding: data, as: UTF8.self)
+                state.isLoading = false
+                
+                return .none
             }
         }
     }
@@ -38,7 +56,7 @@ struct CounterFeature {
 
 struct CounterView: View {
     let store: StoreOf<CounterFeature>
-
+    
     var body: some View {
         VStack {
             Text("\(store.count)")
@@ -54,7 +72,7 @@ struct CounterView: View {
                 .padding()
                 .background(Color.black.opacity(0.1))
                 .cornerRadius(10)
-
+                
                 Button("+") {
                     store.send(.incrementButtonTapped)
                 }
@@ -62,15 +80,33 @@ struct CounterView: View {
                 .padding()
                 .background(Color.black.opacity(0.1))
                 .cornerRadius(10)
+                
+            }
+            Button("Fact") {
+                store.send(.factButtonTapped)
+            }
+            .font(.largeTitle)
+            .padding()
+            .background(Color.black.opacity(0.1))
+            .cornerRadius(10)
+            
+            if state.isLoading {
+                ProgressView()
+                
+            } else if let fact = store.fact {
+                Text(fact)
+                    .font(.largeTitle)
+                    .multilineTextAlignment(.center)
+                    .padding()
             }
         }
     }
 }
 
 #Preview {
-  CounterView(
-    store: Store(initialState: CounterFeature.State()) {
-      CounterFeature()
-    }
-  )
+    CounterView(
+        store: Store(initialState: CounterFeature.State()) {
+            CounterFeature()
+        }
+    )
 }
