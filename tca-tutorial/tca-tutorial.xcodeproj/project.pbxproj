@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		683D6E782FDBEAAA0016667E /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 683D6E772FDBEAAA0016667E /* ComposableArchitecture */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		68AC914F2FDAF40F006CEE5A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				683D6E782FDBEAAA0016667E /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,12 +77,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		683D6E762FDBEAAA0016667E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		68AC91362FDAF40D006CEE5A = {
 			isa = PBXGroup;
 			children = (
 				68AC91412FDAF40D006CEE5A /* tca-tutorial */,
 				68AC91512FDAF40F006CEE5A /* tca-tutorialTests */,
 				68AC915B2FDAF40F006CEE5A /* tca-tutorialUITests */,
+				683D6E762FDBEAAA0016667E /* Frameworks */,
 				68AC91402FDAF40D006CEE5A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -112,6 +125,7 @@
 			);
 			name = "tca-tutorial";
 			packageProductDependencies = (
+				683D6E772FDBEAAA0016667E /* ComposableArchitecture */,
 			);
 			productName = "tca-tutorial";
 			productReference = 68AC913F2FDAF40D006CEE5A /* tca-tutorial.app */;
@@ -592,6 +606,14 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		683D6E772FDBEAAA0016667E /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 68AC916E2FDAF8A6006CEE5A /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 68AC91372FDAF40D006CEE5A /* Project object */;
 }
