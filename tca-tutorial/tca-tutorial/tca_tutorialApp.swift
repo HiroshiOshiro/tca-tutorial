@@ -6,27 +6,18 @@
 //
 
 import SwiftUI
-import SwiftData
+import ComposableArchitecture
 
 @main
 struct tca_tutorialApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
+    static let store = Store(initialState: CounterFeature.State()) {
+      CounterFeature()
+            ._printChanges()
+    }
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            CounterView(store: tca_tutorialApp.store)
         }
-        .modelContainer(sharedModelContainer)
     }
 }

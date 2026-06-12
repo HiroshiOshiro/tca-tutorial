@@ -24,11 +24,11 @@ struct CounterFeature {
         Reduce { state, action in
             switch action {
             case .decrementButtonTapped:
-                state.count += 1
+                state.count -= 1
                 return .none  // state の講師だけの場合は .none
 
             case .incrementButtonTapped:
-                state.count -= 1
+                state.count += 1
                 return .none
 
             }
