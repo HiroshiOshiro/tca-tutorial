@@ -10,14 +10,13 @@ import ComposableArchitecture
 
 @main
 struct tca_tutorialApp: App {
-    static let store = Store(initialState: CounterFeature.State()) {
-      CounterFeature()
-            ._printChanges()
+    static let store = Store(initialState: AppFeature.State()) {
+      AppFeature()
     }
 
     var body: some Scene {
         WindowGroup {
-            CounterView(store: tca_tutorialApp.store)
+            AppView(store: tca_tutorialApp.store)
         }
     }
 }
