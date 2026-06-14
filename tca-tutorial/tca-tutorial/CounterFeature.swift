@@ -27,7 +27,7 @@ struct CounterFeature {
         case timerTick
     }
     
-    enum CancelID { case timer }
+    nonisolated enum CancelID: Hashable, Sendable { case timer }
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
