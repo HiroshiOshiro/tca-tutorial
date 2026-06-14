@@ -30,6 +30,7 @@ struct CounterFeature {
     nonisolated enum CancelID: Hashable, Sendable { case timer }
     
     @Dependency(\.continuousClock) var clock
+    @Dependency(NumberFactClient.self) var numberFact
     
     var body: some Reducer<State, Action> {
         Reduce { state, action in
@@ -49,10 +50,7 @@ struct CounterFeature {
                 state.isLoading = true
                 
                 return .run { [count = state.count] send in
-                    let (data, _) = try await URLSession.shared
-                        .data(from: URL(string: "http://number-trivia.com/\(count)")!)
-                    let fact = String(decoding: data, as: UTF8.self)
-                    await send(.factResponse(fact))
+                    try await send(.factResponse(self.numberFact.fetch(count)))
                 }
                 
             case let .factResponse(fact):
